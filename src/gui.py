@@ -14,21 +14,12 @@ class MemoryGameGUI:
 
         # Biến để lưu các số ngẫu nhiên và số lần chơi
         self.correct_numbers = generate_numbers()
-        self.attempts = 3
-
         # Label hiển thị các số
         self.number_label = tk.Label(self.frame, text=self.correct_numbers, font=("Arial", 24))
         self.number_label.grid(row=0, column=0)
 
-        # Nhập dữ liệu từ người dùng
-        self.input_label = tk.Label(self.frame, text="Nhập các số cách nhau bằng dấu cách:")
-        self.input_label.grid(row=1, column=0)
 
-        self.entry = tk.Entry(self.frame, font=("Arial", 18))
-        self.entry.grid(row=2, column=0)
-
-        self.submit_button = tk.Button(self.frame, text="Xác nhận", command=self.check_input, font=("Arial", 18))
-        self.submit_button.grid(row=3, column=0)
+        
 
         # Đếm ngược thời gian
         self.countdown_label = tk.Label(self.frame, font=("Arial", 18))
@@ -42,20 +33,23 @@ class MemoryGameGUI:
             self.root.after(1000, self.countdown, seconds - 1)
         else:
             self.number_label.config(text="")
+            self.countdown_label.config(text="Hết giờ, hãy nhập số đã nhớ")
+                    # Nhập dữ liệu từ người dùng
+            self.submit_button = tk.Button(self.frame, text="Xác nhận", command=self.check_input, font=("Arial", 18))
+            self.submit_button.grid(row=3, column=0)
+            self.input_label = tk.Label(self.frame, text="Nhập các số cách nhau bằng dấu cách:")
+            self.input_label.grid(row=1, column=0)
+
+            self.entry = tk.Entry(self.frame, font=("Arial", 18))
+            self.entry.grid(row=2, column=0)
 
     def check_input(self):
         #Kiểm tra đáp án người dùng và hiển thị thông báo.
         user_input = self.entry.get()
         if check_answer(user_input, self.correct_numbers):
-            if self.attempts > 1:
-                self.attempts -= 1
-                self.correct_numbers = generate_numbers()  # Tạo số mới cho vòng tiếp theo
-                self.number_label.config(text=self.correct_numbers)
-                self.entry.delete(0, tk.END)
-                messagebox.showinfo("Chính xác!", "Bạn đã nhập đúng! Vòng tiếp theo.")
-            else:
-                messagebox.showinfo("Chúc mừng!", "Chúc mừng bạn đã thắng trò chơi!")
-                self.root.quit()
+           
+            messagebox.showinfo("Chúc mừng!", "Chúc mừng bạn đã thắng trò chơi!")
+            self.root.quit()
         else:
             messagebox.showerror("Sai rồi!", "Đáp án không đúng. Trò chơi kết thúc.")
             self.root.quit()

@@ -3,8 +3,7 @@ from gui import MemoryGameGUI
 
 def main():
     root = tk.Tk()
-    game_gui = MemoryGameGUI(root)
+    MemoryGameGUI(root)
     root.mainloop()
-
 if __name__ == "__main__":
     main()
